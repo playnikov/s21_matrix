@@ -32,18 +32,6 @@ void s21_remove_matrix(matrix_t *A) {
   free(A);
 }
 
-int s21_matrix_filling(matrix_t *result) {
-  int result_code = OK;
-  for (int i = 0; i < result->rows && result_code == OK; i++) {
-    for (int j = 0; j < result->columns && result_code == OK; j++) {
-      if (scanf("%lf", &result->matrix[i][j]) != 1) {
-        result_code = INCORRECT;
-      }
-    }
-  }
-  return result_code;
-}
-
 int s21_eq_matrix(matrix_t *A, matrix_t *B) {
   int result = SUCCESS;
   if (A->rows == B->rows && A->columns == B->columns) {
@@ -89,9 +77,21 @@ int s21_sub_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
 }
 
 int s21_mult_number(matrix_t *A, double number, matrix_t *result) {
-  for (int i = 0; i < A->rows; i++) {
-    for (int j = 0; j < A->columns; j++) {
-      result->matrix[i][j] = A->matrix[i][j] * number;
+  int result_code = OK;
+  if (matrix_valid(A) || matrix_valid(result)) {
+    result_code = INCORRECT;
+  } else {
+    for (int i = 0; i < A->rows; i++) {
+      for (int j = 0; j < A->columns; j++) {
+        result->matrix[i][j] = A->matrix[i][j] * number;
+      }
     }
   }
+  return result_code;
+}
+
+int s21_mult_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
+  int result_code = OK;
+
+  return result_code;
 }
